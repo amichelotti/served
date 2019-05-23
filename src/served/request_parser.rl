@@ -200,10 +200,17 @@ using namespace served;
 	Request_Line = ( Method " " URI_reference " " HTTP_Version CRLF ) ;
 
 	HTTP_CTL = (0 - 31) | 127 ;
+	/*
 	HTTP_separator = ( "(" | ")" | "<" | ">" | "@"
 	                 | "," | ";" | ":" | "\\" | "\""
 	                 | "/" | "[" | "]" | "?" | "="
 	                 | "{" | "}" | " " | "\t"
+	                 ) ;
+					 */
+	HTTP_separator = ( "(" | ")" | "<" | ">" | "@"
+	                 | "," | ";" | ":" | "\\" 
+	                 | "/" | "?" | "="
+	                 | " " | "\t"
 	                 ) ;
 
 	lws = CRLF? (" " | "\t")+ ;
