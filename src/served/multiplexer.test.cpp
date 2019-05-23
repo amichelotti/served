@@ -488,6 +488,38 @@ TEST_CASE("multiplexer test base path", "[mux]")
 		CHECK(req.params["TEST"] == "expected_123");
 	}
 }
+/*TEST_CASE("Test Json  params", "[mux]")
+{
+
+	SECTION("Check GET json params created")
+	{
+		served::response res;
+		served::request req;
+		served::uri url;
+		std::stringstream ss;
+		url.set_URI("/CU?cmd=search&value={\"prova\":[\"ciccio\",\"pippo\"]}");
+		url.set_path("/CU");
+
+		req.set_destination(url);
+	
+		req.set_method(served::method::POST);
+		ss<<"REQUEST: uri"<<req.url().URI()<<" path:"<<req.url().path()<<"req body:"<<req.body();
+		INFO(ss.str());
+
+		served::multiplexer mux;
+		mux.handle("/CU").post([](served::response & res, const served::request & req) {
+			(void) req;
+			res.set_status(served::status_2XX::OK);
+			REQUIRE(req.query["cmd"] == "search");
+
+		});
+
+		
+		mux.forward_to_handler( res, req );
+
+	}
+	
+}*/
 
 TEST_CASE("multiplexer test plugins", "[mux]")
 {

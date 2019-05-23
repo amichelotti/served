@@ -74,6 +74,53 @@ TEST_CASE("request parser impl can parse http requests", "[request_parser_impl]"
 		}
 	}
 }
+TEST_CASE("request parser impl can parse JSON http requests", "[request_parser_impl]")
+{
+	served::request req;
+	served::request_parser_impl parser(req);
+	const char* request =
+		"POST /MDS?cmd=search&value=pistola&json={\"prova\":[\"ciccio\",\"pippo\"]} HTTP/1.1\r\n"
+		"Host: api.datasift.com\r\n"
+		"Content-Type: text/xml; charset=utf-8\r\n"
+		"Content-Length: 10\r\n"
+		"\r\n"
+		"cmd=search";
+
+		//		"Content-Length: 45\r\n"
+
+		//"cmd=search&value={\"prova\":[\"ciccio\",\"pippo\"]}\r\n";
+
+	auto status = parser.parse(request, strlen(request));
+
+	REQUIRE(status == served::request_parser_impl::FINISHED);
+
+	SECTION("header is parsed correctly")
+	{
+		SECTION("check request")
+		{
+			REQUIRE(req.method()       == served::method::POST);
+			REQUIRE(req.HTTP_version() == "HTTP/1.1");
+		//	REQUIRE(req.body()         == "cmd=search&value={\"prova\":[\"ciccio\",\"pippo\"]}");
+		}
+		SECTION("check uri")
+		{
+			//REQUIRE(req.url().URI()      == "/MDS");
+			REQUIRE(req.url().path()     == "/MDS");
+			//CHECK(req.url().query()    == "cmd=search&value={\"prova\":[\"ciccio\",\"pippo\"]}");
+			//CHECK(req.url().query()    == "cmd=search&value={\"prova\":[\"ciccio\",\"pippo\"]}");
+		}
+		SECTION("check query")
+		{
+			REQUIRE(req.query["cmd"] == "search");
+			REQUIRE(req.query["value"] == "pistola");
+			REQUIRE(req.query["json"] == "{\"prova\":[\"ciccio\",\"pippo\"]}");
+
+
+		}
+		
+	}
+}
+
 
 TEST_CASE("request parser read partial http requests", "[request_parser_impl]")
 {

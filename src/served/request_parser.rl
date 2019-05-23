@@ -18,6 +18,13 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ 	
+	HTTP_separator = ( "(" | ")" | "<" | ">" | "@"
+	                 | "," | ";" | ":" | "\\" | "\""
+	                 | "/" | "[" | "]" | "?" | "="
+	                 | "{" | "}" | " " | "\t"
+	                 ) ;
+
  */
 
 #include <served/request_parser.hpp>
@@ -112,8 +119,8 @@ using namespace served;
 	unreserved    = ( alpha | digit | "-" | "." | "_" | "~" ) ;
 
 	pct_encoded   = ( "%" xdigit xdigit ) ;
-
-	pchar         = ( unreserved | pct_encoded | sub_delims | ":" | "@" ) ;
+	json_extra_chars   = ("{"|"}" |"\"" | "[" | "]");
+	pchar         = ( unreserved | pct_encoded | sub_delims | ":" | "@" | json_extra_chars) ;
 
 	fragment      = ( ( pchar | "/" | "?" )* ) >mark %fragment ;
 
@@ -200,13 +207,7 @@ using namespace served;
 	Request_Line = ( Method " " URI_reference " " HTTP_Version CRLF ) ;
 
 	HTTP_CTL = (0 - 31) | 127 ;
-	/*
-	HTTP_separator = ( "(" | ")" | "<" | ">" | "@"
-	                 | "," | ";" | ":" | "\\" | "\""
-	                 | "/" | "[" | "]" | "?" | "="
-	                 | "{" | "}" | " " | "\t"
-	                 ) ;
-					 */
+
 	HTTP_separator = ( "(" | ")" | "<" | ">" | "@"
 	                 | "," | ";" | ":" | "\\" 
 	                 | "/" | "?" | "="

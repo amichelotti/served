@@ -126,6 +126,32 @@ protected:
 		CAPTURE(string(at, length));
 	}
 };
+TEST_CASE("request parser POST with json params", "[request_parser]"){
+	mock_request_parser parser;
+
+	const char* request =
+		"POST /MDS HTTP/1.1\r\n"
+		"Host: api.datasift.com\r\n"
+		"Content-Type: text/xml; charset=utf-8\r\n"
+		"Content-Length: 44\r\n"
+		"\r\n"
+		"cmd=search&value={\"prova\":[\"ciccio\",\"pippo\"]}\r\n";
+	size_t read_bytes = parser.execute(request, strlen(request));
+
+	SECTION("parser behaviour")
+	{
+		SECTION("will parse header without errors")
+		{
+			REQUIRE(served::request_parser::FINISHED == parser.get_status());
+		}
+		SECTION("parse returns offset to beginning of content")
+		{
+			REQUIRE(string(&request[read_bytes], strlen(request)-read_bytes) == "cmd=search&value={\"prova\":[\"ciccio\",\"pippo\"]}\r\n");
+		}
+
+	}
+
+}
 
 TEST_CASE("request parser can parse http requests", "[request_parser]")
 {

@@ -1,5 +1,5 @@
 
-#line 1 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 1 "/home/michelo/progetti/served/src/served/request_parser.rl"
 /*
  * Copyright (C) 2014 MediaSift Ltd.
  *
@@ -20,6 +20,13 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ 	
+	HTTP_separator = ( "(" | ")" | "<" | ">" | "@"
+	                 | "," | ";" | ":" | "\\" | "\""
+	                 | "/" | "[" | "]" | "?" | "="
+	                 | "{" | "}" | " " | "\t"
+	                 ) ;
+
  */
 
 #include <served/request_parser.hpp>
@@ -33,7 +40,7 @@ using namespace served;
 /** Machine **/
 
 
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 static const int request_parser_start = 1;
 static const int request_parser_first_final = 194;
 static const int request_parser_error = 0;
@@ -41,7 +48,7 @@ static const int request_parser_error = 0;
 static const int request_parser_en_main = 1;
 
 
-#line 224 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 232 "/home/michelo/progetti/served/src/served/request_parser.rl"
 
 
 request_parser::request_parser()
@@ -51,13 +58,13 @@ request_parser::request_parser()
 	// Ragel generates an unused constant for the entry point.
 	// The following will suppress the resulting warning.
 	(void) request_parser_en_main;
-
-#line 53 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+	
+#line 63 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	{
 	cs = request_parser_start;
 	}
 
-#line 231 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 242 "/home/michelo/progetti/served/src/served/request_parser.rl"
 }
 
 request_parser::~request_parser()
@@ -78,8 +85,8 @@ request_parser::execute(const char *buffer, size_t len)
 	const char *p  = buffer+d_offset;
 	const char *pe = buffer+len;
 
-
-#line 80 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+	
+#line 90 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	{
 	if ( p == pe )
 		goto _test_eof;
@@ -96,7 +103,7 @@ st0:
 cs = 0;
 	goto _out;
 tr0:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -105,7 +112,7 @@ st2:
 	if ( ++p == pe )
 		goto _test_eof2;
 case 2:
-#line 106 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 116 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) == 32 )
 		goto tr2;
 	if ( (*p) > 57 ) {
@@ -115,7 +122,7 @@ case 2:
 		goto st175;
 	goto st0;
 tr2:
-#line 62 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 69 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_method(buffer, PTR_TO(mark), LEN(mark, p));
 	}
@@ -124,7 +131,7 @@ st3:
 	if ( ++p == pe )
 		goto _test_eof3;
 case 3:
-#line 125 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 135 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr4;
 		case 33: goto tr5;
@@ -148,65 +155,65 @@ case 3:
 		goto tr10;
 	goto st0;
 tr4:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
-#line 92 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 99 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_path(buffer, PTR_TO(mark), LEN(mark,p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st4;
 tr35:
-#line 92 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 99 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_path(buffer, PTR_TO(mark), LEN(mark,p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st4;
 tr41:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
-#line 72 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 79 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		fragment(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st4;
 tr44:
-#line 72 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 79 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		fragment(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st4;
 tr51:
-#line 77 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 84 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(query_start, p);
 	}
-#line 82 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 89 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		query_string(buffer, PTR_TO(query_start), LEN(query_start, p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st4;
 tr55:
-#line 82 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 89 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		query_string(buffer, PTR_TO(query_start), LEN(query_start, p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
@@ -215,12 +222,12 @@ st4:
 	if ( ++p == pe )
 		goto _test_eof4;
 case 4:
-#line 216 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 226 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) == 72 )
 		goto tr11;
 	goto st0;
 tr11:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -229,7 +236,7 @@ st5:
 	if ( ++p == pe )
 		goto _test_eof5;
 case 5:
-#line 230 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 240 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) == 84 )
 		goto st6;
 	goto st0;
@@ -285,23 +292,23 @@ case 12:
 	}
 	goto st0;
 tr19:
-#line 87 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 94 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		http_version(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st13;
 tr28:
-#line 52 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 59 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
-#line 57 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 64 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		http_field(buffer, PTR_TO(field_start), field_len, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st13;
 tr31:
-#line 57 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 64 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		http_field(buffer, PTR_TO(field_start), field_len, PTR_TO(mark), LEN(mark, p));
 	}
@@ -310,20 +317,17 @@ st13:
 	if ( ++p == pe )
 		goto _test_eof13;
 case 13:
-#line 311 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 321 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 10: goto tr22;
 		case 13: goto tr23;
-		case 33: goto tr21;
-		case 124: goto tr21;
-		case 126: goto tr21;
 	}
 	if ( (*p) < 42 ) {
 		if ( (*p) < 11 ) {
 			if ( 1 <= (*p) && (*p) <= 8 )
 				goto tr21;
 		} else if ( (*p) > 31 ) {
-			if ( 35 <= (*p) && (*p) <= 39 )
+			if ( 33 <= (*p) && (*p) <= 39 )
 				goto tr21;
 		} else
 			goto tr21;
@@ -332,8 +336,8 @@ case 13:
 			if ( 45 <= (*p) && (*p) <= 46 )
 				goto tr21;
 		} else if ( (*p) > 57 ) {
-			if ( (*p) > 90 ) {
-				if ( 94 <= (*p) && (*p) <= 122 )
+			if ( (*p) > 91 ) {
+				if ( 93 <= (*p) && (*p) <= 126 )
 					goto tr21;
 			} else if ( (*p) >= 65 )
 				goto tr21;
@@ -343,7 +347,7 @@ case 13:
 		goto tr21;
 	goto st0;
 tr21:
-#line 42 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 49 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(field_start, p);
 	}
@@ -352,19 +356,15 @@ st14:
 	if ( ++p == pe )
 		goto _test_eof14;
 case 14:
-#line 353 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
-	switch( (*p) ) {
-		case 33: goto st14;
-		case 58: goto tr25;
-		case 124: goto st14;
-		case 126: goto st14;
-	}
+#line 360 "/home/michelo/progetti/served/src/served/request_parser.cpp"
+	if ( (*p) == 58 )
+		goto tr25;
 	if ( (*p) < 42 ) {
 		if ( (*p) < 10 ) {
 			if ( 1 <= (*p) && (*p) <= 8 )
 				goto st14;
 		} else if ( (*p) > 31 ) {
-			if ( 35 <= (*p) && (*p) <= 39 )
+			if ( 33 <= (*p) && (*p) <= 39 )
 				goto st14;
 		} else
 			goto st14;
@@ -373,8 +373,8 @@ case 14:
 			if ( 45 <= (*p) && (*p) <= 46 )
 				goto st14;
 		} else if ( (*p) > 57 ) {
-			if ( (*p) > 90 ) {
-				if ( 94 <= (*p) && (*p) <= 122 )
+			if ( (*p) > 91 ) {
+				if ( 93 <= (*p) && (*p) <= 126 )
 					goto st14;
 			} else if ( (*p) >= 65 )
 				goto st14;
@@ -384,13 +384,13 @@ case 14:
 		goto st14;
 	goto st0;
 tr25:
-#line 47 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 54 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		field_len = LEN(field_start, p);
 	}
 	goto st15;
 tr27:
-#line 52 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 59 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -399,7 +399,7 @@ st15:
 	if ( ++p == pe )
 		goto _test_eof15;
 case 15:
-#line 400 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 403 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr27;
@@ -410,7 +410,7 @@ case 15:
 	}
 	goto tr26;
 tr26:
-#line 52 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 59 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -419,7 +419,7 @@ st16:
 	if ( ++p == pe )
 		goto _test_eof16;
 case 16:
-#line 420 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 423 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr31;
@@ -428,23 +428,23 @@ case 16:
 	}
 	goto st16;
 tr20:
-#line 87 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 94 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		http_version(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st17;
 tr29:
-#line 52 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 59 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
-#line 57 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 64 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		http_field(buffer, PTR_TO(field_start), field_len, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st17;
 tr32:
-#line 57 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 64 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		http_field(buffer, PTR_TO(field_start), field_len, PTR_TO(mark), LEN(mark, p));
 	}
@@ -453,23 +453,23 @@ st17:
 	if ( ++p == pe )
 		goto _test_eof17;
 case 17:
-#line 454 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 457 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) == 10 )
 		goto st13;
 	goto st0;
 tr22:
-#line 42 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 49 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(field_start, p);
 	}
-#line 97 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 104 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		header_done(buffer, p + 1, pe - p - 1);
 		{p++; cs = 194; goto _out;}
 	}
 	goto st194;
 tr34:
-#line 97 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 104 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		header_done(buffer, p + 1, pe - p - 1);
 		{p++; cs = 194; goto _out;}
@@ -479,19 +479,15 @@ st194:
 	if ( ++p == pe )
 		goto _test_eof194;
 case 194:
-#line 480 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
-	switch( (*p) ) {
-		case 33: goto st14;
-		case 58: goto tr25;
-		case 124: goto st14;
-		case 126: goto st14;
-	}
+#line 483 "/home/michelo/progetti/served/src/served/request_parser.cpp"
+	if ( (*p) == 58 )
+		goto tr25;
 	if ( (*p) < 42 ) {
 		if ( (*p) < 10 ) {
 			if ( 1 <= (*p) && (*p) <= 8 )
 				goto st14;
 		} else if ( (*p) > 31 ) {
-			if ( 35 <= (*p) && (*p) <= 39 )
+			if ( 33 <= (*p) && (*p) <= 39 )
 				goto st14;
 		} else
 			goto st14;
@@ -500,8 +496,8 @@ case 194:
 			if ( 45 <= (*p) && (*p) <= 46 )
 				goto st14;
 		} else if ( (*p) > 57 ) {
-			if ( (*p) > 90 ) {
-				if ( 94 <= (*p) && (*p) <= 122 )
+			if ( (*p) > 91 ) {
+				if ( 93 <= (*p) && (*p) <= 126 )
 					goto st14;
 			} else if ( (*p) >= 65 )
 				goto st14;
@@ -511,7 +507,7 @@ case 194:
 		goto st14;
 	goto st0;
 tr23:
-#line 42 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 49 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(field_start, p);
 	}
@@ -520,20 +516,17 @@ st18:
 	if ( ++p == pe )
 		goto _test_eof18;
 case 18:
-#line 521 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 520 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 10: goto tr34;
-		case 33: goto st14;
 		case 58: goto tr25;
-		case 124: goto st14;
-		case 126: goto st14;
 	}
 	if ( (*p) < 42 ) {
 		if ( (*p) < 11 ) {
 			if ( 1 <= (*p) && (*p) <= 8 )
 				goto st14;
 		} else if ( (*p) > 31 ) {
-			if ( 35 <= (*p) && (*p) <= 39 )
+			if ( 33 <= (*p) && (*p) <= 39 )
 				goto st14;
 		} else
 			goto st14;
@@ -542,8 +535,8 @@ case 18:
 			if ( 45 <= (*p) && (*p) <= 46 )
 				goto st14;
 		} else if ( (*p) > 57 ) {
-			if ( (*p) > 90 ) {
-				if ( 94 <= (*p) && (*p) <= 122 )
+			if ( (*p) > 91 ) {
+				if ( 93 <= (*p) && (*p) <= 126 )
 					goto st14;
 			} else if ( (*p) >= 65 )
 				goto st14;
@@ -553,7 +546,7 @@ case 18:
 		goto st14;
 	goto st0;
 tr5:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -562,7 +555,7 @@ st19:
 	if ( ++p == pe )
 		goto _test_eof19;
 case 19:
-#line 563 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 559 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr35;
 		case 33: goto st19;
@@ -585,49 +578,49 @@ case 19:
 		goto st19;
 	goto st0;
 tr6:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
-#line 92 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 99 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_path(buffer, PTR_TO(mark), LEN(mark,p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st20;
 tr37:
-#line 92 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 99 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_path(buffer, PTR_TO(mark), LEN(mark,p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st20;
 tr53:
-#line 77 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 84 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(query_start, p);
 	}
-#line 82 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 89 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		query_string(buffer, PTR_TO(query_start), LEN(query_start, p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
 	goto st20;
 tr57:
-#line 82 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 89 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		query_string(buffer, PTR_TO(query_start), LEN(query_start, p));
 	}
-#line 67 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 74 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_uri(buffer, PTR_TO(mark), LEN(mark, p));
 	}
@@ -636,26 +629,31 @@ st20:
 	if ( ++p == pe )
 		goto _test_eof20;
 case 20:
-#line 637 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 633 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr41;
-		case 33: goto tr42;
 		case 37: goto tr43;
 		case 61: goto tr42;
+		case 93: goto tr42;
 		case 95: goto tr42;
-		case 126: goto tr42;
 	}
 	if ( (*p) < 63 ) {
-		if ( 36 <= (*p) && (*p) <= 59 )
+		if ( (*p) > 34 ) {
+			if ( 36 <= (*p) && (*p) <= 59 )
+				goto tr42;
+		} else if ( (*p) >= 33 )
 			goto tr42;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 91 ) {
+		if ( (*p) > 123 ) {
+			if ( 125 <= (*p) && (*p) <= 126 )
+				goto tr42;
+		} else if ( (*p) >= 97 )
 			goto tr42;
 	} else
 		goto tr42;
 	goto st0;
 tr42:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -664,26 +662,31 @@ st21:
 	if ( ++p == pe )
 		goto _test_eof21;
 case 21:
-#line 665 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 666 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr44;
-		case 33: goto st21;
 		case 37: goto st22;
 		case 61: goto st21;
+		case 93: goto st21;
 		case 95: goto st21;
-		case 126: goto st21;
 	}
 	if ( (*p) < 63 ) {
-		if ( 36 <= (*p) && (*p) <= 59 )
+		if ( (*p) > 34 ) {
+			if ( 36 <= (*p) && (*p) <= 59 )
+				goto st21;
+		} else if ( (*p) >= 33 )
 			goto st21;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 91 ) {
+		if ( (*p) > 123 ) {
+			if ( 125 <= (*p) && (*p) <= 126 )
+				goto st21;
+		} else if ( (*p) >= 97 )
 			goto st21;
 	} else
 		goto st21;
 	goto st0;
 tr43:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -692,7 +695,7 @@ st22:
 	if ( ++p == pe )
 		goto _test_eof22;
 case 22:
-#line 693 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 699 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st23;
@@ -716,7 +719,7 @@ case 23:
 		goto st21;
 	goto st0;
 tr7:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -725,7 +728,7 @@ st24:
 	if ( ++p == pe )
 		goto _test_eof24;
 case 24:
-#line 726 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 732 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st25;
@@ -749,7 +752,7 @@ case 25:
 		goto st19;
 	goto st0;
 tr201:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -758,28 +761,30 @@ st26:
 	if ( ++p == pe )
 		goto _test_eof26;
 case 26:
-#line 759 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 765 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr35;
-		case 33: goto st26;
 		case 35: goto tr37;
 		case 37: goto st27;
 		case 61: goto st26;
 		case 63: goto tr40;
+		case 93: goto st26;
 		case 95: goto st26;
-		case 126: goto st26;
 	}
 	if ( (*p) < 64 ) {
-		if ( 36 <= (*p) && (*p) <= 59 )
+		if ( 33 <= (*p) && (*p) <= 59 )
 			goto st26;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 91 ) {
+		if ( (*p) > 123 ) {
+			if ( 125 <= (*p) && (*p) <= 126 )
+				goto st26;
+		} else if ( (*p) >= 97 )
 			goto st26;
 	} else
 		goto st26;
 	goto st0;
 tr202:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -788,7 +793,7 @@ st27:
 	if ( ++p == pe )
 		goto _test_eof27;
 case 27:
-#line 789 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 797 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st28;
@@ -812,17 +817,17 @@ case 28:
 		goto st26;
 	goto st0;
 tr9:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
-#line 92 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 99 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_path(buffer, PTR_TO(mark), LEN(mark,p));
 	}
 	goto st29;
 tr40:
-#line 92 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 99 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		request_path(buffer, PTR_TO(mark), LEN(mark,p));
 	}
@@ -831,27 +836,29 @@ st29:
 	if ( ++p == pe )
 		goto _test_eof29;
 case 29:
-#line 832 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 840 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr51;
-		case 33: goto tr52;
 		case 35: goto tr53;
 		case 37: goto tr54;
 		case 61: goto tr52;
+		case 93: goto tr52;
 		case 95: goto tr52;
-		case 126: goto tr52;
 	}
 	if ( (*p) < 63 ) {
-		if ( 36 <= (*p) && (*p) <= 59 )
+		if ( 33 <= (*p) && (*p) <= 59 )
 			goto tr52;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 91 ) {
+		if ( (*p) > 123 ) {
+			if ( 125 <= (*p) && (*p) <= 126 )
+				goto tr52;
+		} else if ( (*p) >= 97 )
 			goto tr52;
 	} else
 		goto tr52;
 	goto st0;
 tr52:
-#line 77 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 84 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(query_start, p);
 	}
@@ -860,27 +867,29 @@ st30:
 	if ( ++p == pe )
 		goto _test_eof30;
 case 30:
-#line 861 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 871 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr55;
-		case 33: goto st30;
 		case 35: goto tr57;
 		case 37: goto st31;
 		case 61: goto st30;
+		case 93: goto st30;
 		case 95: goto st30;
-		case 126: goto st30;
 	}
 	if ( (*p) < 63 ) {
-		if ( 36 <= (*p) && (*p) <= 59 )
+		if ( 33 <= (*p) && (*p) <= 59 )
 			goto st30;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 91 ) {
+		if ( (*p) > 123 ) {
+			if ( 125 <= (*p) && (*p) <= 126 )
+				goto st30;
+		} else if ( (*p) >= 97 )
 			goto st30;
 	} else
 		goto st30;
 	goto st0;
 tr54:
-#line 77 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 84 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(query_start, p);
 	}
@@ -889,7 +898,7 @@ st31:
 	if ( ++p == pe )
 		goto _test_eof31;
 case 31:
-#line 890 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 902 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	if ( (*p) < 65 ) {
 		if ( 48 <= (*p) && (*p) <= 57 )
 			goto st32;
@@ -913,7 +922,7 @@ case 32:
 		goto st30;
 	goto st0;
 tr8:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -922,23 +931,25 @@ st33:
 	if ( ++p == pe )
 		goto _test_eof33;
 case 33:
-#line 923 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 935 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr35;
-		case 33: goto st26;
 		case 35: goto tr37;
 		case 37: goto st27;
 		case 47: goto st34;
 		case 61: goto st26;
 		case 63: goto tr40;
+		case 93: goto st26;
 		case 95: goto st26;
-		case 126: goto st26;
 	}
 	if ( (*p) < 64 ) {
-		if ( 36 <= (*p) && (*p) <= 59 )
+		if ( 33 <= (*p) && (*p) <= 59 )
 			goto st26;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 91 ) {
+		if ( (*p) > 123 ) {
+			if ( 125 <= (*p) && (*p) <= 126 )
+				goto st26;
+		} else if ( (*p) >= 97 )
 			goto st26;
 	} else
 		goto st26;
@@ -2947,7 +2958,7 @@ case 172:
 		goto st172;
 	goto st0;
 tr10:
-#line 37 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 44 "/home/michelo/progetti/served/src/served/request_parser.rl"
 	{
 		MARK(mark, p);
 	}
@@ -2956,7 +2967,7 @@ st173:
 	if ( ++p == pe )
 		goto _test_eof173;
 case 173:
-#line 2957 "/home/vagrant/src/dev/served/src/served/request_parser.cpp"
+#line 2971 "/home/michelo/progetti/served/src/served/request_parser.cpp"
 	switch( (*p) ) {
 		case 32: goto tr35;
 		case 33: goto st19;
@@ -2990,20 +3001,22 @@ st174:
 case 174:
 	switch( (*p) ) {
 		case 32: goto tr4;
-		case 33: goto tr201;
 		case 35: goto tr6;
 		case 37: goto tr202;
 		case 47: goto tr8;
 		case 61: goto tr201;
 		case 63: goto tr9;
+		case 93: goto tr201;
 		case 95: goto tr201;
-		case 126: goto tr201;
 	}
 	if ( (*p) < 64 ) {
-		if ( 36 <= (*p) && (*p) <= 59 )
+		if ( 33 <= (*p) && (*p) <= 59 )
 			goto tr201;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 91 ) {
+		if ( (*p) > 123 ) {
+			if ( 125 <= (*p) && (*p) <= 126 )
+				goto tr201;
+		} else if ( (*p) >= 97 )
 			goto tr201;
 	} else
 		goto tr201;
@@ -3232,205 +3245,205 @@ case 193:
 		goto tr2;
 	goto st0;
 	}
-	_test_eof2: cs = 2; goto _test_eof;
-	_test_eof3: cs = 3; goto _test_eof;
-	_test_eof4: cs = 4; goto _test_eof;
-	_test_eof5: cs = 5; goto _test_eof;
-	_test_eof6: cs = 6; goto _test_eof;
-	_test_eof7: cs = 7; goto _test_eof;
-	_test_eof8: cs = 8; goto _test_eof;
-	_test_eof9: cs = 9; goto _test_eof;
-	_test_eof10: cs = 10; goto _test_eof;
-	_test_eof11: cs = 11; goto _test_eof;
-	_test_eof12: cs = 12; goto _test_eof;
-	_test_eof13: cs = 13; goto _test_eof;
-	_test_eof14: cs = 14; goto _test_eof;
-	_test_eof15: cs = 15; goto _test_eof;
-	_test_eof16: cs = 16; goto _test_eof;
-	_test_eof17: cs = 17; goto _test_eof;
-	_test_eof194: cs = 194; goto _test_eof;
-	_test_eof18: cs = 18; goto _test_eof;
-	_test_eof19: cs = 19; goto _test_eof;
-	_test_eof20: cs = 20; goto _test_eof;
-	_test_eof21: cs = 21; goto _test_eof;
-	_test_eof22: cs = 22; goto _test_eof;
-	_test_eof23: cs = 23; goto _test_eof;
-	_test_eof24: cs = 24; goto _test_eof;
-	_test_eof25: cs = 25; goto _test_eof;
-	_test_eof26: cs = 26; goto _test_eof;
-	_test_eof27: cs = 27; goto _test_eof;
-	_test_eof28: cs = 28; goto _test_eof;
-	_test_eof29: cs = 29; goto _test_eof;
-	_test_eof30: cs = 30; goto _test_eof;
-	_test_eof31: cs = 31; goto _test_eof;
-	_test_eof32: cs = 32; goto _test_eof;
-	_test_eof33: cs = 33; goto _test_eof;
-	_test_eof34: cs = 34; goto _test_eof;
-	_test_eof35: cs = 35; goto _test_eof;
-	_test_eof36: cs = 36; goto _test_eof;
-	_test_eof37: cs = 37; goto _test_eof;
-	_test_eof38: cs = 38; goto _test_eof;
-	_test_eof39: cs = 39; goto _test_eof;
-	_test_eof40: cs = 40; goto _test_eof;
-	_test_eof41: cs = 41; goto _test_eof;
-	_test_eof42: cs = 42; goto _test_eof;
-	_test_eof43: cs = 43; goto _test_eof;
-	_test_eof44: cs = 44; goto _test_eof;
-	_test_eof45: cs = 45; goto _test_eof;
-	_test_eof46: cs = 46; goto _test_eof;
-	_test_eof47: cs = 47; goto _test_eof;
-	_test_eof48: cs = 48; goto _test_eof;
-	_test_eof49: cs = 49; goto _test_eof;
-	_test_eof50: cs = 50; goto _test_eof;
-	_test_eof51: cs = 51; goto _test_eof;
-	_test_eof52: cs = 52; goto _test_eof;
-	_test_eof53: cs = 53; goto _test_eof;
-	_test_eof54: cs = 54; goto _test_eof;
-	_test_eof55: cs = 55; goto _test_eof;
-	_test_eof56: cs = 56; goto _test_eof;
-	_test_eof57: cs = 57; goto _test_eof;
-	_test_eof58: cs = 58; goto _test_eof;
-	_test_eof59: cs = 59; goto _test_eof;
-	_test_eof60: cs = 60; goto _test_eof;
-	_test_eof61: cs = 61; goto _test_eof;
-	_test_eof62: cs = 62; goto _test_eof;
-	_test_eof63: cs = 63; goto _test_eof;
-	_test_eof64: cs = 64; goto _test_eof;
-	_test_eof65: cs = 65; goto _test_eof;
-	_test_eof66: cs = 66; goto _test_eof;
-	_test_eof67: cs = 67; goto _test_eof;
-	_test_eof68: cs = 68; goto _test_eof;
-	_test_eof69: cs = 69; goto _test_eof;
-	_test_eof70: cs = 70; goto _test_eof;
-	_test_eof71: cs = 71; goto _test_eof;
-	_test_eof72: cs = 72; goto _test_eof;
-	_test_eof73: cs = 73; goto _test_eof;
-	_test_eof74: cs = 74; goto _test_eof;
-	_test_eof75: cs = 75; goto _test_eof;
-	_test_eof76: cs = 76; goto _test_eof;
-	_test_eof77: cs = 77; goto _test_eof;
-	_test_eof78: cs = 78; goto _test_eof;
-	_test_eof79: cs = 79; goto _test_eof;
-	_test_eof80: cs = 80; goto _test_eof;
-	_test_eof81: cs = 81; goto _test_eof;
-	_test_eof82: cs = 82; goto _test_eof;
-	_test_eof83: cs = 83; goto _test_eof;
-	_test_eof84: cs = 84; goto _test_eof;
-	_test_eof85: cs = 85; goto _test_eof;
-	_test_eof86: cs = 86; goto _test_eof;
-	_test_eof87: cs = 87; goto _test_eof;
-	_test_eof88: cs = 88; goto _test_eof;
-	_test_eof89: cs = 89; goto _test_eof;
-	_test_eof90: cs = 90; goto _test_eof;
-	_test_eof91: cs = 91; goto _test_eof;
-	_test_eof92: cs = 92; goto _test_eof;
-	_test_eof93: cs = 93; goto _test_eof;
-	_test_eof94: cs = 94; goto _test_eof;
-	_test_eof95: cs = 95; goto _test_eof;
-	_test_eof96: cs = 96; goto _test_eof;
-	_test_eof97: cs = 97; goto _test_eof;
-	_test_eof98: cs = 98; goto _test_eof;
-	_test_eof99: cs = 99; goto _test_eof;
-	_test_eof100: cs = 100; goto _test_eof;
-	_test_eof101: cs = 101; goto _test_eof;
-	_test_eof102: cs = 102; goto _test_eof;
-	_test_eof103: cs = 103; goto _test_eof;
-	_test_eof104: cs = 104; goto _test_eof;
-	_test_eof105: cs = 105; goto _test_eof;
-	_test_eof106: cs = 106; goto _test_eof;
-	_test_eof107: cs = 107; goto _test_eof;
-	_test_eof108: cs = 108; goto _test_eof;
-	_test_eof109: cs = 109; goto _test_eof;
-	_test_eof110: cs = 110; goto _test_eof;
-	_test_eof111: cs = 111; goto _test_eof;
-	_test_eof112: cs = 112; goto _test_eof;
-	_test_eof113: cs = 113; goto _test_eof;
-	_test_eof114: cs = 114; goto _test_eof;
-	_test_eof115: cs = 115; goto _test_eof;
-	_test_eof116: cs = 116; goto _test_eof;
-	_test_eof117: cs = 117; goto _test_eof;
-	_test_eof118: cs = 118; goto _test_eof;
-	_test_eof119: cs = 119; goto _test_eof;
-	_test_eof120: cs = 120; goto _test_eof;
-	_test_eof121: cs = 121; goto _test_eof;
-	_test_eof122: cs = 122; goto _test_eof;
-	_test_eof123: cs = 123; goto _test_eof;
-	_test_eof124: cs = 124; goto _test_eof;
-	_test_eof125: cs = 125; goto _test_eof;
-	_test_eof126: cs = 126; goto _test_eof;
-	_test_eof127: cs = 127; goto _test_eof;
-	_test_eof128: cs = 128; goto _test_eof;
-	_test_eof129: cs = 129; goto _test_eof;
-	_test_eof130: cs = 130; goto _test_eof;
-	_test_eof131: cs = 131; goto _test_eof;
-	_test_eof132: cs = 132; goto _test_eof;
-	_test_eof133: cs = 133; goto _test_eof;
-	_test_eof134: cs = 134; goto _test_eof;
-	_test_eof135: cs = 135; goto _test_eof;
-	_test_eof136: cs = 136; goto _test_eof;
-	_test_eof137: cs = 137; goto _test_eof;
-	_test_eof138: cs = 138; goto _test_eof;
-	_test_eof139: cs = 139; goto _test_eof;
-	_test_eof140: cs = 140; goto _test_eof;
-	_test_eof141: cs = 141; goto _test_eof;
-	_test_eof142: cs = 142; goto _test_eof;
-	_test_eof143: cs = 143; goto _test_eof;
-	_test_eof144: cs = 144; goto _test_eof;
-	_test_eof145: cs = 145; goto _test_eof;
-	_test_eof146: cs = 146; goto _test_eof;
-	_test_eof147: cs = 147; goto _test_eof;
-	_test_eof148: cs = 148; goto _test_eof;
-	_test_eof149: cs = 149; goto _test_eof;
-	_test_eof150: cs = 150; goto _test_eof;
-	_test_eof151: cs = 151; goto _test_eof;
-	_test_eof152: cs = 152; goto _test_eof;
-	_test_eof153: cs = 153; goto _test_eof;
-	_test_eof154: cs = 154; goto _test_eof;
-	_test_eof155: cs = 155; goto _test_eof;
-	_test_eof156: cs = 156; goto _test_eof;
-	_test_eof157: cs = 157; goto _test_eof;
-	_test_eof158: cs = 158; goto _test_eof;
-	_test_eof159: cs = 159; goto _test_eof;
-	_test_eof160: cs = 160; goto _test_eof;
-	_test_eof161: cs = 161; goto _test_eof;
-	_test_eof162: cs = 162; goto _test_eof;
-	_test_eof163: cs = 163; goto _test_eof;
-	_test_eof164: cs = 164; goto _test_eof;
-	_test_eof165: cs = 165; goto _test_eof;
-	_test_eof166: cs = 166; goto _test_eof;
-	_test_eof167: cs = 167; goto _test_eof;
-	_test_eof168: cs = 168; goto _test_eof;
-	_test_eof169: cs = 169; goto _test_eof;
-	_test_eof170: cs = 170; goto _test_eof;
-	_test_eof171: cs = 171; goto _test_eof;
-	_test_eof172: cs = 172; goto _test_eof;
-	_test_eof173: cs = 173; goto _test_eof;
-	_test_eof174: cs = 174; goto _test_eof;
-	_test_eof175: cs = 175; goto _test_eof;
-	_test_eof176: cs = 176; goto _test_eof;
-	_test_eof177: cs = 177; goto _test_eof;
-	_test_eof178: cs = 178; goto _test_eof;
-	_test_eof179: cs = 179; goto _test_eof;
-	_test_eof180: cs = 180; goto _test_eof;
-	_test_eof181: cs = 181; goto _test_eof;
-	_test_eof182: cs = 182; goto _test_eof;
-	_test_eof183: cs = 183; goto _test_eof;
-	_test_eof184: cs = 184; goto _test_eof;
-	_test_eof185: cs = 185; goto _test_eof;
-	_test_eof186: cs = 186; goto _test_eof;
-	_test_eof187: cs = 187; goto _test_eof;
-	_test_eof188: cs = 188; goto _test_eof;
-	_test_eof189: cs = 189; goto _test_eof;
-	_test_eof190: cs = 190; goto _test_eof;
-	_test_eof191: cs = 191; goto _test_eof;
-	_test_eof192: cs = 192; goto _test_eof;
-	_test_eof193: cs = 193; goto _test_eof;
+	_test_eof2: cs = 2; goto _test_eof; 
+	_test_eof3: cs = 3; goto _test_eof; 
+	_test_eof4: cs = 4; goto _test_eof; 
+	_test_eof5: cs = 5; goto _test_eof; 
+	_test_eof6: cs = 6; goto _test_eof; 
+	_test_eof7: cs = 7; goto _test_eof; 
+	_test_eof8: cs = 8; goto _test_eof; 
+	_test_eof9: cs = 9; goto _test_eof; 
+	_test_eof10: cs = 10; goto _test_eof; 
+	_test_eof11: cs = 11; goto _test_eof; 
+	_test_eof12: cs = 12; goto _test_eof; 
+	_test_eof13: cs = 13; goto _test_eof; 
+	_test_eof14: cs = 14; goto _test_eof; 
+	_test_eof15: cs = 15; goto _test_eof; 
+	_test_eof16: cs = 16; goto _test_eof; 
+	_test_eof17: cs = 17; goto _test_eof; 
+	_test_eof194: cs = 194; goto _test_eof; 
+	_test_eof18: cs = 18; goto _test_eof; 
+	_test_eof19: cs = 19; goto _test_eof; 
+	_test_eof20: cs = 20; goto _test_eof; 
+	_test_eof21: cs = 21; goto _test_eof; 
+	_test_eof22: cs = 22; goto _test_eof; 
+	_test_eof23: cs = 23; goto _test_eof; 
+	_test_eof24: cs = 24; goto _test_eof; 
+	_test_eof25: cs = 25; goto _test_eof; 
+	_test_eof26: cs = 26; goto _test_eof; 
+	_test_eof27: cs = 27; goto _test_eof; 
+	_test_eof28: cs = 28; goto _test_eof; 
+	_test_eof29: cs = 29; goto _test_eof; 
+	_test_eof30: cs = 30; goto _test_eof; 
+	_test_eof31: cs = 31; goto _test_eof; 
+	_test_eof32: cs = 32; goto _test_eof; 
+	_test_eof33: cs = 33; goto _test_eof; 
+	_test_eof34: cs = 34; goto _test_eof; 
+	_test_eof35: cs = 35; goto _test_eof; 
+	_test_eof36: cs = 36; goto _test_eof; 
+	_test_eof37: cs = 37; goto _test_eof; 
+	_test_eof38: cs = 38; goto _test_eof; 
+	_test_eof39: cs = 39; goto _test_eof; 
+	_test_eof40: cs = 40; goto _test_eof; 
+	_test_eof41: cs = 41; goto _test_eof; 
+	_test_eof42: cs = 42; goto _test_eof; 
+	_test_eof43: cs = 43; goto _test_eof; 
+	_test_eof44: cs = 44; goto _test_eof; 
+	_test_eof45: cs = 45; goto _test_eof; 
+	_test_eof46: cs = 46; goto _test_eof; 
+	_test_eof47: cs = 47; goto _test_eof; 
+	_test_eof48: cs = 48; goto _test_eof; 
+	_test_eof49: cs = 49; goto _test_eof; 
+	_test_eof50: cs = 50; goto _test_eof; 
+	_test_eof51: cs = 51; goto _test_eof; 
+	_test_eof52: cs = 52; goto _test_eof; 
+	_test_eof53: cs = 53; goto _test_eof; 
+	_test_eof54: cs = 54; goto _test_eof; 
+	_test_eof55: cs = 55; goto _test_eof; 
+	_test_eof56: cs = 56; goto _test_eof; 
+	_test_eof57: cs = 57; goto _test_eof; 
+	_test_eof58: cs = 58; goto _test_eof; 
+	_test_eof59: cs = 59; goto _test_eof; 
+	_test_eof60: cs = 60; goto _test_eof; 
+	_test_eof61: cs = 61; goto _test_eof; 
+	_test_eof62: cs = 62; goto _test_eof; 
+	_test_eof63: cs = 63; goto _test_eof; 
+	_test_eof64: cs = 64; goto _test_eof; 
+	_test_eof65: cs = 65; goto _test_eof; 
+	_test_eof66: cs = 66; goto _test_eof; 
+	_test_eof67: cs = 67; goto _test_eof; 
+	_test_eof68: cs = 68; goto _test_eof; 
+	_test_eof69: cs = 69; goto _test_eof; 
+	_test_eof70: cs = 70; goto _test_eof; 
+	_test_eof71: cs = 71; goto _test_eof; 
+	_test_eof72: cs = 72; goto _test_eof; 
+	_test_eof73: cs = 73; goto _test_eof; 
+	_test_eof74: cs = 74; goto _test_eof; 
+	_test_eof75: cs = 75; goto _test_eof; 
+	_test_eof76: cs = 76; goto _test_eof; 
+	_test_eof77: cs = 77; goto _test_eof; 
+	_test_eof78: cs = 78; goto _test_eof; 
+	_test_eof79: cs = 79; goto _test_eof; 
+	_test_eof80: cs = 80; goto _test_eof; 
+	_test_eof81: cs = 81; goto _test_eof; 
+	_test_eof82: cs = 82; goto _test_eof; 
+	_test_eof83: cs = 83; goto _test_eof; 
+	_test_eof84: cs = 84; goto _test_eof; 
+	_test_eof85: cs = 85; goto _test_eof; 
+	_test_eof86: cs = 86; goto _test_eof; 
+	_test_eof87: cs = 87; goto _test_eof; 
+	_test_eof88: cs = 88; goto _test_eof; 
+	_test_eof89: cs = 89; goto _test_eof; 
+	_test_eof90: cs = 90; goto _test_eof; 
+	_test_eof91: cs = 91; goto _test_eof; 
+	_test_eof92: cs = 92; goto _test_eof; 
+	_test_eof93: cs = 93; goto _test_eof; 
+	_test_eof94: cs = 94; goto _test_eof; 
+	_test_eof95: cs = 95; goto _test_eof; 
+	_test_eof96: cs = 96; goto _test_eof; 
+	_test_eof97: cs = 97; goto _test_eof; 
+	_test_eof98: cs = 98; goto _test_eof; 
+	_test_eof99: cs = 99; goto _test_eof; 
+	_test_eof100: cs = 100; goto _test_eof; 
+	_test_eof101: cs = 101; goto _test_eof; 
+	_test_eof102: cs = 102; goto _test_eof; 
+	_test_eof103: cs = 103; goto _test_eof; 
+	_test_eof104: cs = 104; goto _test_eof; 
+	_test_eof105: cs = 105; goto _test_eof; 
+	_test_eof106: cs = 106; goto _test_eof; 
+	_test_eof107: cs = 107; goto _test_eof; 
+	_test_eof108: cs = 108; goto _test_eof; 
+	_test_eof109: cs = 109; goto _test_eof; 
+	_test_eof110: cs = 110; goto _test_eof; 
+	_test_eof111: cs = 111; goto _test_eof; 
+	_test_eof112: cs = 112; goto _test_eof; 
+	_test_eof113: cs = 113; goto _test_eof; 
+	_test_eof114: cs = 114; goto _test_eof; 
+	_test_eof115: cs = 115; goto _test_eof; 
+	_test_eof116: cs = 116; goto _test_eof; 
+	_test_eof117: cs = 117; goto _test_eof; 
+	_test_eof118: cs = 118; goto _test_eof; 
+	_test_eof119: cs = 119; goto _test_eof; 
+	_test_eof120: cs = 120; goto _test_eof; 
+	_test_eof121: cs = 121; goto _test_eof; 
+	_test_eof122: cs = 122; goto _test_eof; 
+	_test_eof123: cs = 123; goto _test_eof; 
+	_test_eof124: cs = 124; goto _test_eof; 
+	_test_eof125: cs = 125; goto _test_eof; 
+	_test_eof126: cs = 126; goto _test_eof; 
+	_test_eof127: cs = 127; goto _test_eof; 
+	_test_eof128: cs = 128; goto _test_eof; 
+	_test_eof129: cs = 129; goto _test_eof; 
+	_test_eof130: cs = 130; goto _test_eof; 
+	_test_eof131: cs = 131; goto _test_eof; 
+	_test_eof132: cs = 132; goto _test_eof; 
+	_test_eof133: cs = 133; goto _test_eof; 
+	_test_eof134: cs = 134; goto _test_eof; 
+	_test_eof135: cs = 135; goto _test_eof; 
+	_test_eof136: cs = 136; goto _test_eof; 
+	_test_eof137: cs = 137; goto _test_eof; 
+	_test_eof138: cs = 138; goto _test_eof; 
+	_test_eof139: cs = 139; goto _test_eof; 
+	_test_eof140: cs = 140; goto _test_eof; 
+	_test_eof141: cs = 141; goto _test_eof; 
+	_test_eof142: cs = 142; goto _test_eof; 
+	_test_eof143: cs = 143; goto _test_eof; 
+	_test_eof144: cs = 144; goto _test_eof; 
+	_test_eof145: cs = 145; goto _test_eof; 
+	_test_eof146: cs = 146; goto _test_eof; 
+	_test_eof147: cs = 147; goto _test_eof; 
+	_test_eof148: cs = 148; goto _test_eof; 
+	_test_eof149: cs = 149; goto _test_eof; 
+	_test_eof150: cs = 150; goto _test_eof; 
+	_test_eof151: cs = 151; goto _test_eof; 
+	_test_eof152: cs = 152; goto _test_eof; 
+	_test_eof153: cs = 153; goto _test_eof; 
+	_test_eof154: cs = 154; goto _test_eof; 
+	_test_eof155: cs = 155; goto _test_eof; 
+	_test_eof156: cs = 156; goto _test_eof; 
+	_test_eof157: cs = 157; goto _test_eof; 
+	_test_eof158: cs = 158; goto _test_eof; 
+	_test_eof159: cs = 159; goto _test_eof; 
+	_test_eof160: cs = 160; goto _test_eof; 
+	_test_eof161: cs = 161; goto _test_eof; 
+	_test_eof162: cs = 162; goto _test_eof; 
+	_test_eof163: cs = 163; goto _test_eof; 
+	_test_eof164: cs = 164; goto _test_eof; 
+	_test_eof165: cs = 165; goto _test_eof; 
+	_test_eof166: cs = 166; goto _test_eof; 
+	_test_eof167: cs = 167; goto _test_eof; 
+	_test_eof168: cs = 168; goto _test_eof; 
+	_test_eof169: cs = 169; goto _test_eof; 
+	_test_eof170: cs = 170; goto _test_eof; 
+	_test_eof171: cs = 171; goto _test_eof; 
+	_test_eof172: cs = 172; goto _test_eof; 
+	_test_eof173: cs = 173; goto _test_eof; 
+	_test_eof174: cs = 174; goto _test_eof; 
+	_test_eof175: cs = 175; goto _test_eof; 
+	_test_eof176: cs = 176; goto _test_eof; 
+	_test_eof177: cs = 177; goto _test_eof; 
+	_test_eof178: cs = 178; goto _test_eof; 
+	_test_eof179: cs = 179; goto _test_eof; 
+	_test_eof180: cs = 180; goto _test_eof; 
+	_test_eof181: cs = 181; goto _test_eof; 
+	_test_eof182: cs = 182; goto _test_eof; 
+	_test_eof183: cs = 183; goto _test_eof; 
+	_test_eof184: cs = 184; goto _test_eof; 
+	_test_eof185: cs = 185; goto _test_eof; 
+	_test_eof186: cs = 186; goto _test_eof; 
+	_test_eof187: cs = 187; goto _test_eof; 
+	_test_eof188: cs = 188; goto _test_eof; 
+	_test_eof189: cs = 189; goto _test_eof; 
+	_test_eof190: cs = 190; goto _test_eof; 
+	_test_eof191: cs = 191; goto _test_eof; 
+	_test_eof192: cs = 192; goto _test_eof; 
+	_test_eof193: cs = 193; goto _test_eof; 
 
 	_test_eof: {}
 	_out: {}
 	}
 
-#line 252 "/home/vagrant/src/dev/served/src/served/request_parser.rl"
+#line 263 "/home/michelo/progetti/served/src/served/request_parser.rl"
 
 	// ASSERT(p <= pe);
 

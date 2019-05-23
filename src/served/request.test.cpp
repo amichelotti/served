@@ -89,3 +89,4 @@ TEST_CASE("Test header case sensitivity", "[request]")
 	REQUIRE( req.header("tEsTiNg-hEaDeR-2") == "value two" );
 	REQUIRE( req.header("testing-header-3") == "value three" );
 }
+
